@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 0;
+            height: 100%;
+            margin: 0;
+            background-color: #f4f4f9;
+            background-image: url('../static/images/BG1.jpg');
+            background-size: cover;
+            backdrop-filter: blur(5px);
+            /* padding-left: 20px;
+            padding-right: 20px; */
+        }
+        .container {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .navbar {
+            background-color: #334155;
+            padding:5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar > ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .navbar > ul li {
+            
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 300ms;
+            
+        }
+        .navbar > ul li:hover {
+            background-color: #64748b;
+        }
+        .navbar > ul a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        .stopwatch-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        #time-display {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .buttons button {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .buttons button:hover {
+            background-color: #45a049;
+        }
+        
+        #reset {
+            background-color: #f44336;
+        }
+        
+        #reset:hover {
+            background-color: #e53935;
+        }
+        .vid_container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .vid1,.vid2{
+            border-radius: 20px;
+            overflow: hidden;
+            flex: 1;
+            text-align: center;
+        }
+        
+    </style>
+    <title>Focus Detection</title>
+</head>
+<body>
+    <div class="navbar">
+        <img src="{% static 'images/As.png' %}" width="150" alt="">
+        <ul>
+            <li><a href="{% url 'index' %}">Eye Detector</a></li>
+            <li><a href="{% url 'age_check' %}">Check Your Age</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Boost Focus Detection</h1>
+        <div class="vid_container">
+            <div class="vid1">
+                <img src="{% url 'video_feed' %}" width="800" height="600" />
+            </div>
+            <div class="vid2">
+                <p>To check how Much you pay attention exactly click "start session" and after finish click "stop session" ,With our Technology we by tracking ur face and moving your eyes we can determine how much you paid attention ,</p>
+                <div clas="stopwatch-container">
+                    <div id="time-display">00:00:00</div>
+                    <div class="buttons">
+                        <button id="startStop">Start Session</button>
+                        <button id="reset">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    </div>
+
+
+    <script>
+        let timer;
+let isRunning = false;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+const timeDisplay = document.getElementById('time-display');
+const startStopButton = document.getElementById('startStop');
+const resetButton = document.getElementById('reset');
+
+function formatTime(num) {
+    return num < 10 ? '0' + num : num;
+}
+
+function startStopwatch() {
+    if (isRunning) {
+        clearInterval(timer);
+        startStopButton.textContent = 'Start Session';
+    } else {
+        timer = setInterval(() => {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes === 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            timeDisplay.textContent = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+        }, 1000);
+        startStopButton.textContent = 'Stop Session';
+    }
+    isRunning = !isRunning;
+}
+
+function resetStopwatch() {
+    clearInterval(timer);
+    isRunning = false;
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    timeDisplay.textContent = '00:00:00';
+    startStopButton.textContent = 'Start Session';
+}
+
+startStopButton.addEventListener('click', startStopwatch);
+resetButton.addEventListener('click', resetStopwatch);
+
+    </script>
+</body>
+</html>
