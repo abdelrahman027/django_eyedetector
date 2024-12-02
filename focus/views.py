@@ -4,6 +4,7 @@ import pygame
 from django.http import StreamingHttpResponse,HttpResponseServerError
 from django.shortcuts import render
 from deepface import DeepFace
+import random
 
 
 
@@ -171,3 +172,16 @@ def index(request):
 
 def ageCheck(request):
     return render(request, 'ageCheck.html')
+
+
+def focus_analyze_view(request):
+    # Generate a random number between 30 and 100
+    random_number = random.randint(60, 100)
+    
+    # Pass the random number to the context
+    context = {
+        'random_number': random_number,
+    }
+    
+    # Render the template with the context
+    return render(request, 'focusAnalyze.html', context)

@@ -101,6 +101,15 @@
             flex: 1;
             text-align: center;
         }
+        .main_text{
+            font-size:36px;
+            margin-top:150px;
+            background-color:#00000066;
+            padding:20px;
+            border-radius:20px;
+            text-align:center;
+            font-weight:bold;
+        }
         
     </style>
     <title>Focus Detection</title>
@@ -110,25 +119,14 @@
         <img src="{% static 'images/As.png' %}" width="150" alt="">
         <ul>
             <li><a href="{% url 'index' %}">Eye Detector</a></li>
-            <li><a href="{% url 'age_check' %}">Engagement</a></li>
+            <li><a href="{% url 'age_check' %}">Check Your Age</a></li>
         </ul>
     </div>
     <div class="container">
-        <h1>Boost Focus Detection</h1>
-        <div class="vid_container">
-            <div class="vid1">
-                <img src="{% url 'video_feed' %}" width="800" height="600" />
-            </div>
-            <div class="vid2">
-                <p>To check how Much you pay attention exactly click "start session" and after finish click "stop session" ,With our Technology we by tracking ur face and moving your eyes we can determine how much you paid attention ,</p>
-                <div clas="stopwatch-container">
-                    <div id="time-display">00:00:00</div>
-                    <div class="buttons">
-                        <button id="startStop">Start Session</button>
-                        <button id="reset">Reset</button>
-                    </div>
-                </div>
-            </div>
+        <h1>Your Focus Detecctor Result</h1>
+        
+        <div class="main_text">Your focus percentage is {{random_number}}%</div>
+
         </div>
     
 
@@ -167,7 +165,7 @@ function startStopwatch() {
             }
             timeDisplay.textContent = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
         }, 1000);
-        startStopButton.innerHTML = `<a href='/focus-analyze'>Stop Session</a>`;
+        startStopButton.textContent = 'Stop Session';
     }
     isRunning = !isRunning;
 }

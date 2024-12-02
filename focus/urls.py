@@ -6,5 +6,7 @@ urlpatterns = [
     path('live_feed/', views.live_feed, name='live_feed'),
     path('',views.index,name="index"),
     path('age-check',views.ageCheck,name="age_check"),
+    path('focus-analyze/',views.focus_analyze_view, name='focus_analyze'),
+    
 
 ]
